@@ -6,7 +6,7 @@ sealed interface Block {
 
 @JvmInline
 value class File(
-    private val id: Long,
+    val id: Long,
 ) : Block {
     override fun toString(): String = if (id > 9) "*" else id.toString()
     override fun checksum(): Long = id

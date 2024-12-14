@@ -43,9 +43,9 @@ class DiskTest {
         expectDisk(disk, "00...111...2...333.44.5555.6666.777.888899")
 
         disk.advancedDefrag()
-        expectDisk(disk, "009921118888777333.44.5555.6666...........")
+        expectDisk(disk, "00992111777.44.333....5555.6666.....8888..")
 
-        assertEquals(disk.checksum(), 2102)
+        assertEquals(disk.checksum(), 2858)
     }
 
     private fun expectDisk(disk: Disk, expected: String) {

@@ -31,43 +31,32 @@ data class Disk(
     fun advancedDefrag() {
         val filesInfo = computeFilesToSize().toMutableList()
 
-        var i = 0
-        while (i < blocks.size) {
-            var size = 0
-            while (blocks.getOrNull(i + size) is Space) {
-                size++
-            }
-            if (size == 0) {
-                i++
-                continue
-            }
-
-            var lastFileInfoIdx = filesInfo.lastIndex
-            while (lastFileInfoIdx >= 0) {
-                val info = filesInfo[lastFileInfoIdx]
-                if (info.size <= size) {
+        for (info in filesInfo) {
+            var idx = 0
+            while (idx < blocks.size) {
+                var size = 0
+                while (blocks.getOrNull(idx + size) is Space) {
+                    size++
+                }
+                if (size >= info.size) {
                     break
                 }
-                lastFileInfoIdx--
+                idx += size + 1
             }
-            if (lastFileInfoIdx < 0) {
+            if (idx == blocks.size) {
                 break
             }
 
-            val info = filesInfo.removeAt(lastFileInfoIdx)
-            if (i < info.position) {
+            if (idx < info.position) {
                 for (x in 0..<info.size) {
-                    blocks[i + x] = File(id = info.fileId)
+                    blocks[idx + x] = File(id = info.fileId)
                     blocks[info.position + x] = Space
                 }
-                i += info.size - 1
             }
-
-            i++
         }
     }
 
-    data class FileInfo(
+    private data class FileInfo(
         val fileId: Long,
         val position: Int,
         var size: Int = 0,
@@ -81,7 +70,7 @@ data class Disk(
                 result.getOrPut(fileId) { FileInfo(fileId, idx) }.size++
             }
         }
-        return result.values.toList().sortedBy { it.fileId }
+        return result.values.toList().sortedBy { -it.fileId }
     }
 
     fun checksum(): Long {

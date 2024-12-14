@@ -3,12 +3,33 @@ package xyz.luan.advent.day9
 import java.util.*
 
 data class Disk(
-    val blocks: List<Block>,
+    val blocks: MutableList<Block>,
 ) {
-    constructor(diskMap: String) : this(parse(diskMap))
+    constructor(diskMap: String) : this(parse(diskMap).toMutableList())
 
     override fun toString(): String {
         return blocks.joinToString("")
+    }
+
+    fun defrag() {
+        var lastSpace = 0
+        for (i in blocks.indices.reversed()) {
+            if (blocks[i] is Space) {
+                continue
+            }
+            while (blocks[lastSpace] !is Space && lastSpace < i) {
+                lastSpace++
+            }
+            if (i <= lastSpace) {
+                break
+            }
+            blocks[lastSpace] = blocks[i]
+            blocks[i] = Space
+        }
+    }
+
+    fun checksum(): Int {
+        return blocks.mapIndexed { idx, el -> idx * el.checksum() }.sum()
     }
 
     companion object {

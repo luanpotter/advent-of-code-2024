@@ -1,18 +1,18 @@
 package xyz.luan.advent.day9
 
 sealed interface Block {
-    fun checksum(): Int
+    fun checksum(): Long
 }
 
 @JvmInline
 value class File(
-    private val id: Int,
+    private val id: Long,
 ) : Block {
     override fun toString(): String = if (id > 9) "*" else id.toString()
-    override fun checksum(): Int = id
+    override fun checksum(): Long = id
 }
 
 data object Space : Block {
     override fun toString(): String = "."
-    override fun checksum(): Int = 0
+    override fun checksum(): Long = 0
 }

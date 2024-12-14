@@ -28,14 +28,14 @@ data class Disk(
         }
     }
 
-    fun checksum(): Int {
+    fun checksum(): Long {
         return blocks.mapIndexed { idx, el -> idx * el.checksum() }.sum()
     }
 
     companion object {
         fun parse(diskMap: String): List<Block> {
             var isFile = true
-            var fileId = 0
+            var fileId = 0L
 
             val result = LinkedList<Block>()
             for (char in diskMap) {

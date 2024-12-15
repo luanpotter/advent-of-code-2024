@@ -1,11 +1,11 @@
-package xyz.luan.advent.day9
+package xyz.luan.advent.day09
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
 class DiskTest {
     @Test
-    fun test1() {
+    fun test1a() {
         val disk = Disk("12345")
         expectDisk(disk, "0..111....22222")
 
@@ -27,7 +27,7 @@ class DiskTest {
     }
 
     @Test
-    fun test2() {
+    fun test2a() {
         val disk = Disk("2333133121414131402")
         expectDisk(disk, "00...111...2...333.44.5555.6666.777.888899")
 

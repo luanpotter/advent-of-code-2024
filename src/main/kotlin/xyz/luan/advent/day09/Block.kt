@@ -1,4 +1,4 @@
-package xyz.luan.advent.day9
+package xyz.luan.advent.day09
 
 sealed interface Block {
     fun checksum(): Long

@@ -27,4 +27,18 @@ class Day01Test {
         val result = day01.simpleSimilarity()
         assertEquals(2, result)
     }
+
+    @Test
+    fun `advanced similarity`() {
+        val day01 = Day01(
+            listOf(
+                listOf(1, 3),
+                listOf(3, 3),
+                listOf(5, 3),
+                listOf(7, 7),
+            )
+        )
+        val result = day01.advancedSimilarity()
+        assertEquals(16, result)
+    }
 }

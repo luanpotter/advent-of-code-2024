@@ -1,0 +1,31 @@
+name: detekt
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  detekt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run detekt on main
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: detektMain
+
+      - name: Run detekt on test
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: detektTest
+
+      - name: Run build
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean build

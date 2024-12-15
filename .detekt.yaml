@@ -1,0 +1,35 @@
+config:
+  validation: true
+  warningsAsErrors: true
+  excludes: ''
+
+processors:
+  active: false
+complexity:
+  active: false
+output-reports:
+  active: false
+
+potential-bugs:
+  active: true
+
+
+formatting:
+  active: true
+  android: false
+  autoCorrect: true
+  TrailingCommaOnCallSite:
+    active: true
+  TrailingCommaOnDeclarationSite:
+    active: true
+
+style:
+  active: true
+  LoopWithTooManyJumpStatements:
+    active: false
+  MagicNumber:
+    active: false
+
+compiler:
+  CompilerWarning:
+    active: true

@@ -30,7 +30,7 @@ class Day02(
             isValid(
                 report
                     .filterIndexed { index, _ -> index != skip }
-                    .toMutableList()
+                    .toMutableList(),
             )
         }
     }

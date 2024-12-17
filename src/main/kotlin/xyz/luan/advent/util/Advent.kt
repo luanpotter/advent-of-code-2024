@@ -15,23 +15,30 @@ private fun loadResource(path: String): URL {
 fun <T> MutableSet<T>.pop(): T = first().also { remove(it) }
 
 typealias Coord = Pair<Int, Int>
+val Coord.x: Int get() = first
+val Coord.y: Int get() = second
+
 typealias Matrix<T> = Array<Array<T>>
 
 val <T> Matrix<T>.coords: List<Coord>
     get() = indices.flatMap { x -> this[x].indices.map { y -> x to y } }
 
-fun <T> Matrix<T>.get(coord: Coord): T = this[coord.first][coord.second]
+fun <T> Matrix<T>.get(coord: Coord): T = this[coord.x][coord.y]
 
 fun <T> Matrix<T>.set(coord: Coord, value: T) {
-    this[coord.first][coord.second] = value
+    this[coord.x][coord.y] = value
 }
 
 fun <T> Matrix<T>.neighborsOf(coord: Coord): List<Coord> {
-    val (x, y) = coord
     val coords = this.coords
+    return allNeighborsOf(coord)
+        .filter { it in coords }
+}
+
+fun <T> Matrix<T>.allNeighborsOf(coord: Coord): List<Coord> {
+    val (x, y) = coord
     return directions
         .map { (dx, dy) -> x + dx to y + dy }
-        .filter { it in coords }
 }
 
 private val directions = setOf(

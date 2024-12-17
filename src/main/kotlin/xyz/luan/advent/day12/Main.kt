@@ -21,30 +21,30 @@ data class FenceBit(
     val y: Int? get() = setOf(from.y, to.y).singleOrNull()
     val x: Int? get() = setOf(from.x, to.x).singleOrNull()
 
-    fun tryCombine(bit: FenceBit): FenceBit? {
-        val side = if (inside == bit.inside) inside else return null
+    fun tryCombine(other: FenceBit): FenceBit? {
+        val side = if (inside == other.inside) inside else return null
 
-        val bitX = bit.x
-        val bitY = bit.y
+        val otherX = other.x
+        val otherY = other.y
 
-        if (bitX != null && bitX == x) {
+        if (otherX != null && otherX == x) {
             val minY = min(from.y, to.y)
             val maxY = max(from.y, to.y)
-            if ((bit.from.y > maxY && bit.to.y > maxY) || (bit.from.y < minY && bit.to.y < minY)) {
+            if ((other.from.y > maxY && other.to.y > maxY) || (other.from.y < minY && other.to.y < minY)) {
                 return null
             }
-            val otherMinY = min(bit.from.y, bit.to.y)
-            val otherMaxY = max(bit.from.y, bit.to.y)
-            return FenceBit(bitX to min(minY, otherMinY), bitX to max(maxY, otherMaxY), side)
-        } else if (bitY != null && bitY == y) {
+            val otherMinY = min(other.from.y, other.to.y)
+            val otherMaxY = max(other.from.y, other.to.y)
+            return FenceBit(otherX to min(minY, otherMinY), otherX to max(maxY, otherMaxY), side)
+        } else if (otherY != null && otherY == y) {
             val minX = min(from.x, to.x)
             val maxX = max(from.x, to.x)
-            if ((bit.from.x > maxX && bit.to.x > maxX) || (bit.from.x < minX && bit.to.x < minX)) {
+            if ((other.from.x > maxX && other.to.x > maxX) || (other.from.x < minX && other.to.x < minX)) {
                 return null
             }
-            val otherMinX = min(bit.from.x, bit.to.x)
-            val otherMaxX = max(bit.from.x, bit.to.x)
-            return FenceBit(min(minX, otherMinX) to bitY, max(maxX, otherMaxX) to bitY, side)
+            val otherMinX = min(other.from.x, other.to.x)
+            val otherMaxX = max(other.from.x, other.to.x)
+            return FenceBit(min(minX, otherMinX) to otherY, max(maxX, otherMaxX) to otherY, side)
         }
         return null
     }

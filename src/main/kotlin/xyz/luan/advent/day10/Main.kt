@@ -1,6 +1,6 @@
 package xyz.luan.advent.day10
 
-import xyz.luan.advent.util.readFile
+import xyz.luan.advent.util.*
 
 fun main() {
     val input = Hike.parse(readFile("day10/input"))
@@ -70,10 +70,11 @@ class Hike(
     }
 
     companion object {
-        fun parse(input: List<String>): List<List<Int>> {
+        fun parse(input: List<String>): Array<Array<Int>> {
             return input
-                .map { line -> line.trim().map { it.digitToInt() } }
+                .map { line -> line.trim().map { it.digitToInt() }.toTypedArray() }
                 .filter { it.isNotEmpty() }
+                .toTypedArray()
         }
     }
 }
